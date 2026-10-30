@@ -1,0 +1,12 @@
+{
+  "name": "airbnb-capstone",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "npm --prefix server start",
+    "heroku-postbuild": "npm ci --prefix server && npm ci --prefix client --include=dev && npm run build --prefix client"
+  },
+  "engines": {
+    "node": "24.x"
+  }
+}

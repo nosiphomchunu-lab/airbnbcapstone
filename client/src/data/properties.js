@@ -1,0 +1,58 @@
+const properties = [
+  {
+    id: '1',
+    title: 'Sunny seaside apartment',
+    location: 'Durban',
+    type: 'Entire apartment',
+    guests: 2,
+    bedrooms: 1,
+    price: 850,
+    amenities: 'Wi-Fi · Kitchen · Free parking',
+    image: '/images/durban-apartment.jpg',
+    images: [
+      '/images/durban-apartment.jpg',
+      '/images/durban-apartment-2.jpg',
+      '/images/durban-apartment-3.jpg',
+      '/images/durban-apartment-4.jpg',
+      '/images/durban-apartment-5.jpg',
+    ],
+  },
+  {
+    id: '2',
+    title: 'Spacious family home',
+    location: 'Durban',
+    type: 'Entire home',
+    guests: 6,
+    bedrooms: 3,
+    price: 2300,
+    amenities: 'Wi-Fi · Kitchen · Pool · Free parking',
+    image: '/images/durban-house.jpg',
+    images: [
+      '/images/durban-house.jpg',
+      '/images/durban-house-2.jpg',
+      '/images/durban-house-3.jpg',
+      '/images/durban-house-4.jpg',
+      '/images/durban-house-5.jpg',
+    ],
+  },
+  {
+    id: '3',
+    title: 'Mountain-view studio',
+    location: 'Cape Town',
+    type: 'Entire apartment',
+    guests: 2,
+    bedrooms: 1,
+    price: 1100,
+    amenities: 'Wi-Fi · Kitchen · Air conditioning',
+    image: '/images/cape-town.jpg',
+    images: [
+      '/images/cape-town.jpg',
+      '/images/cape-town-2.jpg',
+      '/images/cape-town-3.jpg',
+      '/images/cape-town-4.jpg',
+      '/images/cape-town-5.jpg',
+    ],
+  },
+]
+
+export default properties
