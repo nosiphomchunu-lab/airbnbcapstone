@@ -33,7 +33,7 @@ function Footer() {
         </div>
 
         <div className="footer-bottom">
-          <span>© 2026 Airbnb clone — student project</span>
+          <span>© 2026 Airbnb Capstone— Nosipho Mchunu</span>
           <span>English (ZA) · ZAR</span>
         </div>
       </footer>
