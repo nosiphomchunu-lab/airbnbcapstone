@@ -136,6 +136,14 @@ function PropertyContent({ id }) {
           <section className="stay-section">
             <h2>Where you’ll sleep</h2>
             <div className="sleeping-card">
+              {images[1] && (
+                <img
+                src={imageUrl(images[1])}
+                alt={`Bedroom at ${property.title}`}
+                className="sleeping-image"
+                />
+                )}
+
               <h3>
                 {property.bedrooms === 0
                   ? 'Studio sleeping area'
@@ -154,8 +162,16 @@ function PropertyContent({ id }) {
             {amenities.length > 0 ? (
               <ul className="stay-amenities">
                 {amenities.map((amenity, index) => (
-                  <li key={`${amenity}-${index}`}>{amenity}</li>
-                ))}
+                  <li key={`${amenity}-${index}`}>
+                  <span aria-hidden="true">
+                  {amenity.toLowerCase().includes('wi-fi') ? '📶' :
+                    amenity.toLowerCase().includes('parking') ? '🚗' :
+                    amenity.toLowerCase().includes('kitchen') ? '🍳' :
+                      '✓'}
+                      </span>
+                      {' '}{amenity}
+                  </li> 
+                  ))}
               </ul>
             ) : (
               <p>No amenities listed yet.</p>
@@ -168,11 +184,70 @@ function PropertyContent({ id }) {
         </aside>
       </div>
 
+
       <section className="stay-section">
-        <h2>Reviews</h2>
-        <p>No reviews yet.</p>
-        <p>This is a new demo listing with no guest ratings.</p>
+      <h2>Select your dates</h2>
+      <p>Choose your check-in and check-out dates to plan your stay.</p>
+       <div className="calendar-container">
+        {[0, 1].map((offset) => {
+        const today = new Date()
+        const month = new Date(
+        today.getFullYear(),
+        today.getMonth() + offset,
+        1
+        )
+
+        const monthName = month.toLocaleString('en-ZA', {
+        month: 'long',
+        year: 'numeric',
+        })
+
+        const firstDay = (month.getDay() + 6) % 7
+        const daysInMonth = new Date(
+        month.getFullYear(),
+        month.getMonth() + 1,
+        0
+        ).getDate()
+
+        return (
+        <div className="calendar-month" key={offset}>
+        <h3>{monthName}</h3>
+
+        <div className="calendar-grid">
+          {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map(
+            (day, index) => (
+              <span key={index} className="calendar-weekday">
+                {day}
+              </span>
+            )
+          )}
+
+          {Array.from({ length: firstDay }, (_, index) => (
+            <span key={`empty-${index}`} />
+          ))}
+
+          {Array.from({ length: daysInMonth }, (_, index) => (
+            <span key={index + 1} className="calendar-day">
+              {index + 1}
+            </span>
+          ))}
+          </div>
+          </div>
+        )
+        })}
+        </div>
+    
       </section>
+
+      
+
+        <section className="stay-section">
+          <h2>Guest reviews</h2>
+          <div className="reviews-empty">
+          <p>This property hasn't received any reviews yet.</p>
+          <p>Be among the first guests to experience this stay.</p>
+          </div>
+        </section>
 
       <section className="stay-section">
         <h2>Where you’ll be</h2>
@@ -194,14 +269,13 @@ function PropertyContent({ id }) {
           <span className="host-avatar" aria-hidden="true">H</span>
           <div>
             <h2>Your host</h2>
-            <p>Capstone demo host</p>
+            <p>Property host</p>
           </div>
         </div>
 
         <p>
-          This sample host profile is part of the student project.
-          Reservations demonstrate the booking process; no payment
-          is taken.
+          Your host will help you prepare for your stay.
+          Contact information is provided after booking confirmation.
         </p>
       </section>
 

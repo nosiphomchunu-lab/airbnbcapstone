@@ -1,31 +1,66 @@
+
 import { useState } from 'react'
 import './App.css'
 import Footer from './components/Footer'
 import { Link, useNavigate } from 'react-router-dom'
 import Header from './components/Header'
 
-
 function App() {
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState('Beach')
 
-  const getaways = {
-    Beach: ['Durban', 'Ballito', 'Umhlanga', 'Plettenberg Bay'],
-    City: ['Cape Town', 'Johannesburg', 'Pretoria', 'Gqeberha'],
-    Nature: ['Drakensberg', 'Hazyview', 'Clarens', 'Graskop'],
-  }
+ 
+
+const getaways = {
+  Beach: ['Umdloti', 'Margate', 'Coffee Bay', 'Wilderness'],
+  City: ['Bloemfontein', 'Polokwane', 'Mbombela', 'Stellenbosch'],
+  Nature: ['Underberg', 'Sabie', 'Golden Gate', 'Tsitsikamma'],
+}
+
+  
+const destinations = [
+  {
+    name: 'Sandton City Hotel',
+    description: '53 km away',
+    location: 'Sandton',
+    image: '/images/sandton-city-hotel.avif',
+    color: '#cc2d4a',
+  },
+  {
+    name: 'Joburg City Hotel',
+    description: '168 km away',
+    location: 'Johannesburg',
+    image: '/images/joburg-city.avif',
+    color: '#bc1a6e',
+  },
+  {
+    name: 'Woodmead Hotel',
+    description: '30 miles away',
+    location: 'Woodmead',
+    image: '/images/woodmead.avif',
+    color: '#de3151',
+  },
+  {
+    name: 'Hyde Park Hotel',
+    description: '34 km away',
+    location: 'Hyde Park',
+    image: '/images/hyde-park-hotel.avif',
+    color: '#d93b30',
+  },
+]
+
 
   function handleSearch(event) {
     event.preventDefault()
 
     const formData = new FormData(event.currentTarget)
-    const location = formData.get('location').trim()
+    const location = String(formData.get('location') || '').trim()
 
     const params = new URLSearchParams({
       location,
-      checkIn: formData.get('checkIn'),
-      checkOut: formData.get('checkOut'),
-      guests: formData.get('guests'),
+      checkIn: String(formData.get('checkIn') || ''),
+      checkOut: String(formData.get('checkOut') || ''),
+      guests: String(formData.get('guests') || '1'),
     })
 
     navigate(`/search?${params.toString()}`)
@@ -37,11 +72,7 @@ function App() {
 
       <main>
         <section id="stays">
-          <h1 className="page-title">Find your next stay</h1>
-          <p>Explore places to stay and plan your next trip.</p>
-
           <form className="search-bar" onSubmit={handleSearch}>
-
             <label className="search-field">
               <span>Location</span>
               <input
@@ -74,136 +105,165 @@ function App() {
             <button className="search-button" type="submit">
               Search
             </button>
-            </form>
+          </form>
         </section>
 
         <section className="hero-banner">
           <div className="hero-content">
-            <h2>Let your curiosity do the booking</h2>
+            <h1>Not sure where to go? Perfect.</h1>
+
             <a className="hero-button" href="#destinations">
-              Explore stays
+              I'm flexible
             </a>
           </div>
         </section>
 
-          <section id="destinations" className="destinations-section">
+        <section
+          id="destinations"
+          className="destinations-section"
+        >
           <h2>Inspiration for your next trip</h2>
 
           <div className="destination-grid">
-            {[
-              {
-                name: 'Cape Town',
-                description: 'Mountains and coastal escapes',
-                image: 'photo-1580060839134-75a5edca2e99',
-                color: '#cc2d4a',
-              },
-              {
-                name: 'Durban',
-                description: 'Explore the warm Indian Ocean coast',
-                image: 'photo-1507525428034-b723cf961d3e',
-                color: '#bc1a6e',
-              },
-              {
-                name: 'Johannesburg',
-                description: 'Discover a vibrant city getaway',
-                image: 'photo-1480714378408-67cf0d13bc1b',
-                color: '#de3151',
-              },
-              {
-                name: 'Drakensberg',
-                description: 'Unwind on a mountain retreat',
-                image: 'photo-1464822759023-fed622ff2c3b',
-                color: '#d93b30',
-              },
-            ].map((destination) => (
+            {destinations.map((destination) => (
               <article
                 className="destination-card"
                 key={destination.name}
-                style={{ backgroundColor: destination.color }}
+                style={{
+                  backgroundColor: destination.color,
+                }}
               >
-                <img
-                  src={`https://images.unsplash.com/${destination.image}?auto=format&fit=crop&w=600&q=80`}
-                  alt={`${destination.name} travel inspiration`}
-                  loading="lazy"
-                />
+                <Link
+                  to={`/search?location=${encodeURIComponent(destination.location)}`}
+                  className="destination-card-link"
+                >
+                  <img
+                    src={destination.image}
+                    alt={destination.name}
+                    loading="lazy"
+                  />
 
-                <div className="destination-card-content">
-                  
-                  <h3>
-                  <Link
-                  to={`/search?location=${encodeURIComponent(destination.name)}`}
-                  style={{ color: 'inherit', textDecoration: 'none' }}
-                  >
-                  {destination.name}
-                  </Link>
-                  </h3>
-
-                  <p>{destination.description}</p>
-                </div>
+                  <div className="destination-card-content">
+                    <h3>{destination.name}</h3>
+                    <p>{destination.description}</p>
+                  </div>
+                </Link>
               </article>
             ))}
           </div>
         </section>
 
-        <section id="experiences" className="experiences-section">
+        <section
+          id="experiences"
+          className="experiences-section"
+        >
           <h2>Discover Airbnb Experiences</h2>
 
           <div className="experiences-grid">
             <article className="experience-card experience-trip">
-              <h3>Things to do<br />on your trip</h3>
-              <button type="button" className="experience-button">
+              <h3>
+                Things to do
+                <br />
+                on your trip
+              </h3>
+
+              <a
+                href="#destinations"
+                className="experience-button"
+              >
                 Experiences
-              </button>
+              </a>
             </article>
 
             <article className="experience-card experience-home">
-              <h3>Things to do<br />from home</h3>
-              <button type="button" className="experience-button">
+              <h3>
+                Things to do
+                <br />
+                from home
+              </h3>
+
+              <a
+                href="#getaways"
+                className="experience-button"
+              >
                 Online Experiences
-              </button>
+              </a>
             </article>
           </div>
         </section>
 
-
-                <section className="gift-section">
+        <section className="gift-section">
           <div className="gift-content">
-            <h2>Shop Airbnb gift cards</h2>
-            <p>Give someone a memorable getaway.</p>
-            <button type="button" className="gift-button">
+            <h2>
+              Shop Airbnb
+              <br />
+              gift cards
+            </h2>
+
+            <a href="#getaways" className="gift-button">
               Learn more
-            </button>
+            </a>
           </div>
 
-          <div className="gift-card-preview">
-            <span>airbnb</span>
-            <strong>A world of possibilities</strong>
-            <span>Gift card</span>
+          <div className="gift-cards-display">
+            <div className="gift-card gift-card-left">
+              <span className="gift-card-logo">◇</span>
+            </div>
+
+            <div className="gift-card gift-card-center">
+              <span className="gift-card-logo">◇</span>
+            </div>
+
+            <div className="gift-card gift-card-right">
+              <span className="gift-card-logo">◇</span>
+            </div>
           </div>
         </section>
 
         <section className="hosting-banner">
-  <h2>Questions about hosting?</h2>
+          <div className="hosting-content">
+            <h2>
+              Questions
+              <br />
+              about
+              <br />
+              hosting?
+            </h2>
 
-  <a className="experience-button" href="#hosting-help">
-    Learn about hosting
-  </a>
-</section>
+            <a
+              className="experience-button"
+              href="#hosting-help"
+            >
+              Ask a Superhost
+            </a>
+          </div>
+        </section>
 
-<details id="hosting-help" className="hosting-help">
-  <summary>How hosting works in this demo</summary>
-  <p>
-    Administrators can create a listing, upload photos, set a nightly
-    price, and manage reservations through the admin dashboard.
-    Guests can browse stays and make a demonstration reservation.
-    No payments are collected.
-  </p>
-</details>
+        <details
+          id="hosting-help"
+          className="hosting-help"
+        >
+          <summary>Learn about hosting</summary>
 
-        <section className="getaways-section">
+          <p>
+            Administrators can create a listing, upload photos,
+            set a nightly price, and manage reservations through
+            the admin dashboard. Guests can browse stays and
+            make a demonstration reservation. No payments
+            are collected.
+          </p>
+        </details>
+
+        <section
+          id="getaways"
+          className="getaways-section"
+        >
           <h2>Inspiration for future getaways</h2>
 
-          <div className="getaway-tabs" aria-label="Getaway categories">
+          <div
+            className="getaway-tabs"
+            aria-label="Getaway categories"
+          >
             {Object.keys(getaways).map((tab) => (
               <button
                 key={tab}
@@ -224,21 +284,20 @@ function App() {
           <ul className="getaway-list">
             {getaways[activeTab].map((place) => (
               <li key={place}>
-                
-                  <Link to={`/search?location=${encodeURIComponent(place)}`}>
+                <Link
+                  to={`/search?location=${encodeURIComponent(place)}`}
+                >
                   <strong>{place}</strong>
-                  </Link>
+                </Link>
 
                 <span>South Africa</span>
               </li>
             ))}
           </ul>
         </section>
-
       </main>
-      
-      <Footer />
 
+      <Footer />
     </>
   )
 }
