@@ -289,10 +289,25 @@ function Admin() {
                         loading="lazy"
                       />
 
-                      <div className="result-details">
-                        <h3>{property.title}</h3>
-                        <p>{property.location}</p>
-                        <p>R{property.price.toFixed(2)} per night</p>
+                        
+                    <div className="result-details">
+                      <h3>{property.title}</h3>
+
+                    <p>{property.location}</p>
+
+                    <p>
+                    {property.guests} guests · {property.type} ·
+                    {' '}{property.bedrooms} bedrooms
+                   </p>
+
+                    {property.amenities && (
+                    <p>{property.amenities}</p>
+                    )}
+
+                      <p>
+                      R{Number(property.price).toFixed(2)} per night
+                      </p> 
+
 
                         <div className="admin-actions">
                           <Link to={`/properties/${property._id}`}>

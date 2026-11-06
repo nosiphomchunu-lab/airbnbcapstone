@@ -1,3 +1,4 @@
+
 const mongoose = require('mongoose')
 
 const propertySchema = new mongoose.Schema(
@@ -38,6 +39,15 @@ const propertySchema = new mongoose.Schema(
       validate: {
         validator: Number.isInteger,
         message: 'Bedrooms must be a whole number',
+      },
+    },
+    bathrooms: {
+      type: Number,
+      default: 1,
+      min: 0,
+      validate: {
+        validator: Number.isInteger,
+        message: 'Bathrooms must be a whole number',
       },
     },
     price: {

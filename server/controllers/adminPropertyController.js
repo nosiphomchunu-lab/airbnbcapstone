@@ -1,3 +1,4 @@
+
 const Property = require('../models/Property')
 const Reservation = require('../models/Reservation')
 
@@ -9,6 +10,7 @@ function getPropertyFields(body) {
     'description',
     'guests',
     'bedrooms',
+    'bathrooms',
     'price',
     'amenities',
     'image',
